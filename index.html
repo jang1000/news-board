@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>에이전트 활동 관제실</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@400;600&display=swap">
+<style>
+:root{--bg:#e9efec;--panel:#f7faf8;--ink:#1b2a2e;--mute:#5d7076;--line:#c9d6d1;
+--c1:#1f8a83;--c2:#d08a1c;--c3:#c24f68;--c4:#5f54c9;--c5:#3f7fc0;color-scheme:light;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#162024;--panel:#1e2b30;--ink:#e3eeea;--mute:#8fa5aa;--line:#33464c;--c1:#43c0b6;--c2:#e9aa42;--c3:#e57a92;--c4:#8f86ee;--c5:#6ba9e6;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#162024;--panel:#1e2b30;--ink:#e3eeea;--mute:#8fa5aa;--line:#33464c;--c1:#43c0b6;--c2:#e9aa42;--c3:#e57a92;--c4:#8f86ee;--c5:#6ba9e6;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "IBM Plex Sans KR",system-ui,sans-serif}
+header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:16px 20px 8px}
+h1{font:400 26px "Gowun Dodum",sans-serif;margin:0}
+.ctl{display:flex;gap:8px;align-items:center;color:var(--mute);font-size:13px}
+button{font:inherit;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:6px 12px;border-radius:8px;cursor:pointer}
+button:focus-visible,.card:focus-visible{outline:2px solid var(--c1);outline-offset:2px}
+button[aria-pressed=true]{background:var(--c1);color:#fff;border-color:var(--c1)}
+main{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:14px;padding:8px 20px 24px}
+@media(max-width:860px){main{grid-template-columns:1fr}}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px}
+h2{font:600 14px "IBM Plex Sans KR",sans-serif;margin:0 0 8px}
+canvas{width:100%;height:auto;aspect-ratio:16/10;display:block;border-radius:8px;background:var(--bg)}
+.roster{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:10px}
+.card{border:1px solid var(--line);border-radius:10px;padding:8px 10px;cursor:pointer;background:var(--panel);text-align:left}
+.card[aria-selected=true]{border-color:var(--ink)}
+.card b{display:flex;align-items:center;gap:6px}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.card small{color:var(--mute);display:block}
+.st{font-size:12px;margin-top:2px}
+.side{display:flex;flex-direction:column;gap:14px;min-width:0}
+ul{list-style:none;margin:0;padding:0;max-height:250px;overflow:auto}
+li{padding:5px 0;border-bottom:1px solid var(--line);font-size:13px}
+li time{color:var(--mute);margin-right:6px;font-variant-numeric:tabular-nums}
+.fact{font-size:13px}
+.fact i{font-style:normal;color:var(--mute)}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--mute);margin-top:8px}
+p{margin:4px 0}
+dialog{border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--ink);padding:16px;max-width:92vw;width:340px}
+dialog::backdrop{background:#0006}
+label{display:block;margin:8px 0;font-size:13px}
+input,select{width:100%;font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);margin-top:3px}
+.row{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:0 8px;margin:0 4px 4px 0;font-size:12px}
+#del{margin-top:8px;color:var(--c3);border-color:var(--c3)}
+button:disabled{opacity:.5;cursor:default}
+.news li{padding:8px 0}.news a{color:var(--c5);text-decoration:none;font-weight:600}.news a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<header>
+<h1>에이전트 활동 관제실</h1>
+<div class="ctl">속도
+<button data-sp="1" aria-pressed="true">보통</button><button data-sp="2" aria-pressed="false">빠르게</button><button id="pause" aria-pressed="false">일시정지</button><button id="add">+ 에이전트 추가</button>
+</div>
+</header>
+<main>
+<section class="box">
+<h2>지금 일하는 모습</h2>
+<canvas id="cv" width="800" height="500" role="img" aria-label="에이전트들이 구역 사이를 오가며 일하는 화면"></canvas>
+<div class="legend" id="legend"></div>
+<div class="roster" id="roster"></div>
+</section>
+<div class="side">
+<section class="box" id="detail"></section>
+<section class="box"><h2>활동 기록</h2><ul id="log" aria-live="polite"></ul></section>
+<section class="box"><h2 id="mt">기억 그래프</h2><ul id="mem"></ul></section>
+</div>
+</main>
+<section class="box" id="nb" style="margin:0 20px 24px"><h2>영역별 뉴스 보드</h2><div class="chips" id="tabs" style="margin-bottom:8px"></div><ul class="news" id="news" style="max-height:380px" aria-live="polite"></ul></section>
+<dialog id="dlg"><form method="dialog" id="fm"><h2>에이전트 추가</h2>
+<div class="chips" id="presets"></div>
+<label>이름 <input name="n" required maxlength="10"></label>
+<label>하는 일 <input name="r" required maxlength="20" placeholder="예: 문서 번역"></label>
+<label>도구 (쉼표로 구분) <input name="t" placeholder="예: 번역기, 용어집"></label>
+<label>색 <select name="c"><option value="--c1">청록</option><option value="--c2">황금</option><option value="--c3">장미</option><option value="--c4">보라</option><option value="--c5">파랑</option></select></label>
+<label>모양 <select name="s"><option value="0">원</option><option value="1">사각형</option><option value="2">삼각형</option><option value="3">마름모</option><option value="4">육각형</option></select></label>
+<label>이미지 (선택, 정사각형으로 잘려 표시됩니다) <input type="file" name="i" accept="image/*"></label>
+<div class="row"><button value="cancel" formnovalidate>취소</button><button value="ok">추가</button></div></form></dialog>
+<script>
+const $=id=>document.getElementById(id);
+const Z={idle:{x:.13,y:.5,n:'대기실'},think:{x:.5,y:.2,n:'생각 구역'},tool:{x:.87,y:.5,n:'도구 창고'},talk:{x:.5,y:.8,n:'회의 테이블'}};
+const SN={idle:'대기 중',think:'생각 중',tool:'도구 사용 중',talk:'대화 중',off:'오프라인'};
+const AG=[
+{id:'res',name:'리서처',role:'자료 수집',c:'--c1',shape:0,tools:['웹 검색','논문 열람'],th:['검색어 후보를 정리하는 중','출처 신뢰도를 비교하는 중'],topics:['초등 AI교육 사례','수행평가 동향','학습 분석 논문']},
+{id:'cod',name:'코더',role:'코드 작성',c:'--c2',shape:1,tools:['코드 실행','테스트 실행'],th:['함수 구조를 설계하는 중','오류 원인을 추적하는 중'],topics:['로그인 화면','배포 스크립트','점수 계산 함수']},
+{id:'coa',name:'수업 코치',role:'수업 조언',c:'--c3',shape:2,tools:['지도안 불러오기','수업 영상 분석'],th:['발문을 다듬는 중','활동 순서를 점검하는 중'],topics:['5학년 과학 수업','모둠 활동','형성평가 문항']},
+{id:'sum',name:'요약가',role:'정리·요약',c:'--c4',shape:3,tools:['문서 읽기','표 만들기'],th:['핵심 문장을 고르는 중','중복 내용을 합치는 중'],topics:['회의록','연수 자료','학부모 안내문']},
+{id:'mon',name:'감시자',role:'상태 점검',c:'--c5',shape:4,tools:['로그 확인','응답 시간 측정'],th:['이상 징후를 비교하는 중','경고 기준을 확인하는 중'],topics:['서버 상태','응답 지연','오류율']},
+{id:'new',name:'뉴스 스크랩',role:'영역별 뉴스 수집',c:'--c2',shape:2,tools:['RSS 수집','기사 요약'],th:['중복 기사를 걸러내는 중','영역별로 기사를 나누는 중'],topics:['교육 뉴스','AI 뉴스','과학 뉴스','경제 뉴스']}
+];
+let speed=1,paused=false,sel='res',now=0;
+const cv=$('cv'),g=cv.getContext('2d'),W=800,H=500;
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function initAg(a,i){a.s='idle';a.x=Z.idle.x*W+(i%5-2)*22;a.y=Z.idle.y*H+(i%5-2)*22;a.until=0;a.mem=[];a.n=0;a.lnk=null;a.say='';a.cnt={think:0,tool:0,talk:0};a.hist=[];if(a.img){const m=new Image();m.src=a.img;a.im=m}}
+AG.forEach(initAg);
+const clock=()=>{const d=new Date();return d.toTimeString().slice(0,8)};
+function log(a,t){a.hist.unshift({t:clock(),h:t});if(a.hist.length>20)a.hist.pop();if(a.id===sel)showDetail();const li=document.createElement('li');li.innerHTML=`<time>${clock()}</time><b style="color:${css(a.c)}">${a.name}</b> ${t}`;const u=$('log');u.prepend(li);while(u.children.length>40)u.lastChild.remove()}
+function fact(a,rel,obj){a.mem.unshift({t:clock(),rel,obj});if(a.mem.length>12)a.mem.pop();if(a.id===sel)showMem()}
+function showMem(){const a=AG.find(x=>x.id===sel);if(!a){$('mt').textContent='기억 그래프';$('mem').innerHTML='<li class="fact">에이전트를 선택하세요.</li>';return}$('mt').textContent=a.name+'의 기억 그래프';const u=$('mem');u.innerHTML='';
+if(!a.mem.length){u.innerHTML='<li class="fact">아직 기억이 없습니다. 에이전트가 일하면 여기에 쌓입니다.</li>';return}
+a.mem.forEach(m=>{const li=document.createElement('li');li.className='fact';li.innerHTML=`${a.name} <i>—${m.rel}→</i> ${m.obj} <i>(${m.t})</i>`;u.append(li)})}
+function setState(a,s,dur,say){a.s=s;a.until=now+dur;a.say=say||'';const z=Z[s==='off'?'idle':s];a.tx=z.x*W+(Math.random()-.5)*110;a.ty=z.y*H+(Math.random()-.5)*60;a.n++;if(a.cnt[s]!==undefined)a.cnt[s]++;draw_roster();if(a.id===sel)showDetail()}
+function next(a){
+ const r=Math.random();
+ if(r<.05){setState(a,'off',5000,'연결 끊김');log(a,'연결이 끊겼습니다. 재시작을 기다립니다.');return}
+ if(a.s==='off'){setState(a,'idle',1500,'복구');log(a,'다시 연결되었습니다.');return}
+ if(r<.3){setState(a,'think',2500+Math.random()*2000,pick(a.th));log(a,a.say+'입니다.');return}
+ if(r<.62){const t=pick(a.tools),o=pick(a.topics);setState(a,'tool',2500+Math.random()*2500,t);log(a,`<em>${t}</em>로 “${o}” 처리`);fact(a,t,o);return}
+ if(r<.85){const b=pick(AG.filter(x=>x!==a&&x.s!=='off'));if(!b){setState(a,'idle',2000,'혼자 일하는 중');return}const o=pick(a.topics),d=3000+Math.random()*1500;
+  setState(a,'talk',d,b.name+'에게 전달');setState(b,'talk',d,a.name+'의 요청');a.lnk=b;b.lnk=null;
+  log(a,`${b.name}에게 “${o}” 결과를 넘겼습니다.`);fact(a,'전달',b.name+' · '+o);fact(b,'받음',a.name+' · '+o);return}
+ setState(a,'idle',2000+Math.random()*2500,'쉬는 중');log(a,'새 요청을 기다리는 중입니다.')
+}
+function draw_roster(){const r=$('roster');if(r.children.length!==AG.length||[...r.children].some((b,i)=>b.dataset.id!==AG[i].id)){r.innerHTML='';AG.forEach(a=>{const b=document.createElement('button');b.className='card';b.dataset.id=a.id;b.onclick=()=>select(a.id);r.append(b)});$('legend').innerHTML=AG.map(a=>`<span><span class="dot" style="background:var(${a.c})"></span> ${a.name}</span>`).join('');$('add').disabled=AG.length>=10}
+[...r.children].forEach(b=>{const a=AG.find(x=>x.id===b.dataset.id);b.setAttribute('aria-selected',a.id===sel);
+b.innerHTML=`<b>${a.img?`<img src="${a.img}" alt="" style="width:20px;height:20px;border-radius:50%;object-fit:cover">`:`<span class="dot" style="background:${css(a.c)}"></span>`}${a.name}</b><small>${a.role}</small><div class="st">${SN[a.s]} · 작업 ${a.n}회</div>`})}
+function shape(a,x,y,rad){g.beginPath();const k=a.shape;
+ if(k===0)g.arc(x,y,rad,0,7);
+ else if(k===1)g.rect(x-rad,y-rad,rad*2,rad*2);
+ else{const n=k===2?3:k===3?4:6;for(let i=0;i<n;i++){const t=i/n*6.283-1.57+(k===3?.785:0);g[i?'lineTo':'moveTo'](x+Math.cos(t)*rad*1.2,y+Math.sin(t)*rad*1.2)}g.closePath()}}
+function frame(){
+ g.clearRect(0,0,W,H);g.font='13px "IBM Plex Sans KR",sans-serif';g.textAlign='center';
+ for(const k in Z){const z=Z[k];g.strokeStyle=css('--line');g.setLineDash([5,5]);g.lineWidth=1.5;g.beginPath();g.roundRect(z.x*W-95,z.y*H-62,190,124,16);g.stroke();g.setLineDash([]);g.fillStyle=css('--mute');g.fillText(z.n,z.x*W,z.y*H-70+0)}
+ AG.forEach(a=>{if(a.lnk&&a.s==='talk'){g.strokeStyle=css(a.c);g.lineWidth=2;g.setLineDash([6,6]);g.lineDashOffset=-now/40;g.beginPath();g.moveTo(a.x,a.y);g.lineTo(a.lnk.x,a.lnk.y);g.stroke();g.setLineDash([])}});
+ AG.forEach(a=>{
+  a.x+=(a.tx-a.x)*.05;a.y+=(a.ty-a.y)*.05;
+  const col=css(a.c),act=a.s!=='idle'&&a.s!=='off';
+  if(act){const p=(now/600)%1;g.strokeStyle=col;g.globalAlpha=1-p;g.lineWidth=2;g.beginPath();g.arc(a.x,a.y,18+p*20,0,7);g.stroke();g.globalAlpha=1}
+  g.globalAlpha=a.s==='off'?.3:1;g.fillStyle=col;if(a.im&&a.im.complete&&a.im.naturalWidth){g.save();g.beginPath();g.arc(a.x,a.y,20,0,7);g.clip();g.drawImage(a.im,a.x-20,a.y-20,40,40);g.restore();g.strokeStyle=col;g.lineWidth=3;g.beginPath();g.arc(a.x,a.y,20,0,7);g.stroke()}else{shape(a,a.x,a.y,16);g.fill()}
+  if(a.id===sel){g.strokeStyle=css('--ink');g.lineWidth=2.5;g.stroke()}
+  g.globalAlpha=1;g.fillStyle=css('--ink');g.fillText(a.name,a.x,a.y+34);
+  if(a.say){g.fillStyle=css('--mute');g.font='12px "IBM Plex Sans KR",sans-serif';g.fillText(a.say,a.x,a.y-26);g.font='13px "IBM Plex Sans KR",sans-serif'}
+ })}
+let last=performance.now();
+function loop(t){const dt=t-last;last=t;if(!paused){now+=dt*speed;AG.forEach(a=>{if(now>=a.until)next(a)})}frame();requestAnimationFrame(loop)}
+$('legend').innerHTML=AG.map(a=>`<span><span class="dot" style="background:var(${a.c})"></span> ${a.name}</span>`).join('');
+document.querySelectorAll('[data-sp]').forEach(b=>b.onclick=()=>{speed=+b.dataset.sp;document.querySelectorAll('[data-sp]').forEach(x=>x.setAttribute('aria-pressed',x===b))});
+$('pause').onclick=e=>{paused=!paused;e.target.setAttribute('aria-pressed',paused);e.target.textContent=paused?'다시 시작':'일시정지'};
+function select(id){sel=id;draw_roster();showMem();showDetail()}
+function showDetail(){const a=AG.find(x=>x.id===sel),d=$('detail');
+ if(!a){d.innerHTML='<h2>에이전트 상세</h2><p>선택된 에이전트가 없습니다. 위의 추가 버튼으로 새로 만들 수 있습니다.</p>';return}
+ d.innerHTML=`<h2>${a.name} 상세</h2><p>${a.img?`<img src="${a.img}" alt="" style="width:44px;height:44px;border-radius:50%;border:3px solid var(${a.c});vertical-align:middle">`:`<span class="dot" style="background:var(${a.c})"></span>`} <b>${a.role}</b> · ${SN[a.s]}${a.say?' ('+a.say+')':''}</p><p>도구: ${a.tools.map(t=>`<span class="tag">${t}</span>`).join('')}</p><p>생각 ${a.cnt.think}회 · 도구 사용 ${a.cnt.tool}회 · 대화 ${a.cnt.talk}회 · 총 ${a.n}회</p><h2>최근 활동</h2><ul>${a.hist.slice(0,5).map(h=>`<li><time>${h.t}</time>${h.h}</li>`).join('')||'<li>아직 활동이 없습니다.</li>'}</ul><button id="del">이 에이전트 삭제</button>`;
+ $('del').onclick=e=>{if(!e.target.dataset.a){e.target.dataset.a=1;e.target.textContent='한 번 더 누르면 삭제됩니다';return}removeAg(a.id)}}
+function removeAg(id){const i=AG.findIndex(x=>x.id===id);if(i<0)return;const a=AG[i];AG.splice(i,1);AG.forEach(x=>{if(x.lnk===a)x.lnk=null});const li=document.createElement('li');li.innerHTML=`<time>${clock()}</time><b>${a.name}</b> 삭제되었습니다.`;$('log').prepend(li);sel=AG[0]?AG[0].id:null;draw_roster();showMem();showDetail()}
+function newAg(n,r,tl,c,s,img){const a={img,id:'a'+Date.now(),name:esc(n),role:esc(r),c,shape:+s,tools:tl.length?tl.map(esc):['검색'],th:['작업 계획을 세우는 중','결과를 검토하는 중'],topics:['새 요청','공유 문서','이전 결과']};initAg(a,AG.length);AG.push(a);select(a.id);log(a,'팀에 합류했습니다.')}
+const PRE=[['번역가','다국어 번역','번역기, 용어집','--c3',2],['평가자','결과 채점','채점표, 비교 도구','--c2',3],['기획자','수업·콘텐츠 기획','아이디어 노트, 일정표','--c4',4]];
+PRE.forEach(p=>{const b=document.createElement('button');b.type='button';b.textContent=p[0];b.onclick=()=>{const f=$('fm').elements;f.n.value=p[0];f.r.value=p[1];f.t.value=p[2];f.c.value=p[3];f.s.value=p[4]};$('presets').append(b)});
+$('add').onclick=()=>{$('fm').reset();$('dlg').showModal()};
+$('fm').onsubmit=e=>{if(e.submitter&&e.submitter.value==='ok'){const f=$('fm').elements;const v=[f.n.value.trim(),f.r.value.trim(),f.t.value.split(',').map(x=>x.trim()).filter(Boolean),f.c.value,f.s.value],fl=f.i.files[0];if(!fl){newAg(...v);return}const rd=new FileReader();rd.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas'),k=96,m=Math.min(im.width,im.height);c.width=c.height=k;c.getContext('2d').drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,k,k);newAg(...v,c.toDataURL('image/jpeg',.85))};im.onerror=()=>newAg(...v);im.src=rd.result};rd.readAsDataURL(fl)}};
+cv.onclick=e=>{const r=cv.getBoundingClientRect(),x=(e.clientX-r.left)*W/r.width,y=(e.clientY-r.top)*H/r.height;let best=null,bd=900;AG.forEach(a=>{const d=(a.x-x)**2+(a.y-y)**2;if(d<bd){bd=d;best=a}});if(best)select(best.id)};
+const DM=['교육','AI','과학','경제'];let nd='교육',NW=[],nmsg='';
+function showNews(){const t=$('tabs');t.innerHTML='';DM.forEach(d=>{const b=document.createElement('button');b.type='button';b.textContent=d+' '+NW.filter(x=>x.domain===d).length;b.setAttribute('aria-pressed',d===nd);b.onclick=()=>{nd=d;showNews()};t.append(b)});
+ const u=$('news'),l=NW.filter(x=>x.domain===nd).sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));u.innerHTML='';
+ if(!l.length){const li=document.createElement('li');li.textContent=nmsg||'아직 모인 기사가 없습니다. 자동 수집이 연결되면 매일 이곳에 쌓입니다.';u.append(li);return}
+ l.forEach(x=>{const li=document.createElement('li'),a=document.createElement('a');a.textContent=x.title||'(제목 없음)';if(/^https?:\/\//.test(x.url||'')){a.href=x.url;a.target='_blank';a.rel='noopener'}li.append(a);u.append(li)})}
+async function loadNews(){try{const r=await fetch('news.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;const j=await r.json();NW=(Array.isArray(j)?j:j.articles||[]).filter(Boolean);nmsg=''}catch(e){nmsg='news.json을 불러오지 못했습니다.'}showNews()}
+loadNews();setInterval(loadNews,300000);
+showNews();draw_roster();showMem();showDetail();requestAnimationFrame(loop);
+</script>
+</body>
+</html>

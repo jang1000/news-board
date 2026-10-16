@@ -1,0 +1,16 @@
+{
+  "교육": [
+    "https://news.google.com/rss/search?q=%EC%B4%88%EB%93%B1%EA%B5%90%EC%9C%A1+OR+%EA%B5%90%EC%9C%A1%EB%B6%80&hl=ko&gl=KR&ceid=KR:ko"
+  ],
+  "AI": [
+    "https://techcrunch.com/category/artificial-intelligence/feed/",
+    "https://news.google.com/rss/search?q=%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5&hl=ko&gl=KR&ceid=KR:ko"
+  ],
+  "과학": [
+    "https://www.sciencedaily.com/rss/all.xml",
+    "https://news.google.com/rss/search?q=%EA%B3%BC%ED%95%99+%EC%97%B0%EA%B5%AC&hl=ko&gl=KR&ceid=KR:ko"
+  ],
+  "경제": [
+    "https://www.yna.co.kr/rss/economy.xml"
+  ]
+}
