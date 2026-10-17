@@ -1,5 +1,61 @@
 [
  {
+  "domain": "교육",
+  "title": "교육부 특성화 선도대학, 인재 양성한다 - 세명일보",
+  "source": "세명일보",
+  "date": "2026-10-18",
+  "summary": "교육부 특성화 선도대학, 인재 양성한다&nbsp;&nbsp;세명일보",
+  "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE16QXR5WUZidmVFZ001TlRoaGJtYkFCaHprRlZBbEk5cUJZekFjVV8tZlJlSUhKOTlaUzEtVmF4bTNncUdFRmZuNXhRc2tlUjVKN092YmpqYzhfd0wwdUhLTkNGT1dNZGV1SjFaRDJlSG8?oc=5"
+ },
+ {
+  "domain": "AI",
+  "title": "하정우 \"AI 해킹에 국가 차원 공동 대응 필요…금융사 보안책임도 강화\" - 뉴스1",
+  "source": "뉴스1",
+  "date": "2026-10-18",
+  "summary": "하정우 \"AI 해킹에 국가 차원 공동 대응 필요…금융사 보안책임도 강화\"&nbsp;&nbsp;뉴스1",
+  "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTFBubjllZWhLcDBERWN4aHlBUC1EbU5GaDRGdU51NnV5c080YkZGNU5xbF9XR1dOZ1NMZnc1a0dnU04xakVzRVBscnhHbkthcEFZR0ZpcllTZzhjYTBheDZpYTBB?oc=5"
+ },
+ {
+  "domain": "AI",
+  "title": "소비자엔 ‘친숙함’, B2B엔 ‘AI’…한컴의 이유 있는 변신 - 디지털데일리",
+  "source": "디지털데일리",
+  "date": "2026-10-18",
+  "summary": "소비자엔 ‘친숙함’, B2B엔 ‘AI’…한컴의 이유 있는 변신&nbsp;&nbsp;디지털데일리",
+  "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE1Jc0otcHFKQXZ0dzc0cTk0dGdRelgyYlVvYWhqUERud296c1kyU1F0SFJGNjhuS1licTVleW40LXFhNG1VV0JmQWlGR0RiaEJsaTZ6Z2VJXzJ3aEdST2E1blp3V2s?oc=5"
+ },
+ {
+  "domain": "AI",
+  "title": "세종교육, 인공지능(AI)로 서·논술형 평가 신뢰도 높인다 - 세종의소리",
+  "source": "세종의소리",
+  "date": "2026-10-18",
+  "summary": "세종교육, 인공지능(AI)로 서·논술형 평가 신뢰도 높인다&nbsp;&nbsp;세종의소리",
+  "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9HQlh3YXdFRUgwMzY5SDJ2bE5BMG9PMzJXemlpQWhDb3p5NERsbjRfTThfZkozbjNyVTQ0ME41QzZxTGlHdk1rejZQYjhoeWhsU3BxNEF0UGxZT0xKNmEtSTBaY3J3Nk0?oc=5"
+ },
+ {
+  "domain": "경제",
+  "title": "[만나보니] 딥엑스 김녹원 \"인텔과 기술협력 본격화…AMD와도 논의\"",
+  "source": "연합뉴스 경제 최신기사",
+  "date": "2026-10-18",
+  "summary": "(서울=연합뉴스) 한상용 기자 = 국내 인공지능(AI) 반도체 기업 딥엑스가 인텔의 AI 소프트웨어 생태계에 자사 신경망처리장치(NPU)를 연동...",
+  "url": "https://www.yna.co.kr/view/AKR20261016157300017"
+ },
+ {
+  "domain": "경제",
+  "title": "[인터뷰] 최진영 미래운용 본부장 \"우량채로 이자수익 확보할 때\"",
+  "source": "연합뉴스 경제 최신기사",
+  "date": "2026-10-18",
+  "summary": "(서울=연합뉴스) 강수지 기자 = &quot;금리 수준이 높아진 지금은 &apos;타이밍&apos;보다 &apos;캐리(이자 수익)&apos;가 수익의 상당 부분을 설명해 주는 환경입니다....",
+  "url": "https://www.yna.co.kr/view/AKR20261016112700008"
+ },
+ {
+  "domain": "경제",
+  "title": "백화점 3분기 성장 둔화 전망…대형마트는 '홈플러스 반사이익'",
+  "source": "연합뉴스 경제 최신기사",
+  "date": "2026-10-18",
+  "summary": "(서울=연합뉴스) 조민정 기자 = 올해 상반기 가파르게 높아졌던 백화점 업계의 실적 성장이 3분기 들어 다소 둔화된 것으로 전망된다.",
+  "url": "https://www.yna.co.kr/view/AKR20261016176200030"
+ },
+ {
   "domain": "AI",
   "title": "中 “AI는 세계에 팔되 기술은 못 준다”…美 맞서 ‘기술 빗장’ - 문화일보",
   "source": "문화일보",
@@ -46,6 +102,46 @@
   "date": "2026-10-17",
   "summary": "(부산=연합뉴스) 민영규 기자 = 중동전쟁 장기화에 따른 고유가 행진 등의 영향으로 전기차 수요가 급증하면서 부산시의 보조금 지원 예산이 순식간...",
   "url": "https://www.yna.co.kr/view/AKR20261016115500051"
+ },
+ {
+  "domain": "교육",
+  "title": "구자근 국회의원, 구미 광평초·광평중 교육부 특별교부금 3억 8,700만 원 확보 - 구미일보",
+  "source": "구미일보",
+  "date": "2026-10-17",
+  "summary": "구자근 국회의원, 구미 광평초·광평중 교육부 특별교부금 3억 8,700만 원 확보&nbsp;&nbsp;구미일보",
+  "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE1wQmNnR0xOdEFFQlpOM1VNdjFOQVFHVnFHZ3NjaFpQZzhjc2tpRXI3bGZPUW5UaGppOXBWbndjbDJQZDlNX0c0T2p3cl9NaVVuWndSanhsREhPTXgtUmc?oc=5"
+ },
+ {
+  "domain": "교육",
+  "title": "복기왕 의원, 아산시 2027년 상반기 교육부 특별교부금 총 15억 3,900만원 확보 - 뉴스티앤티",
+  "source": "뉴스티앤티",
+  "date": "2026-10-17",
+  "summary": "복기왕 의원, 아산시 2027년 상반기 교육부 특별교부금 총 15억 3,900만원 확보&nbsp;&nbsp;뉴스티앤티",
+  "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTFBOb1k2NzV2ak9zZENMcTAtRmoya3JHUlQ1WFdNVmFuS0F4VlA0YThzSTJDZUNtRk5qbS1WTDNBeU9Vc2ZBSHpmcWJFM0lwanlFUTFsbmkzdU1jSFVncnVoYl9SeG1IUEJuSlE?oc=5"
+ },
+ {
+  "domain": "과학",
+  "title": "New drug reverses severe fatty liver disease by repairing the gut",
+  "source": "Latest Science News -- ScienceDaily",
+  "date": "2026-10-17",
+  "summary": "Scientists have discovered that a potential new drug can reverse severe fatty liver disease in animal models by restorin",
+  "url": "https://www.sciencedaily.com/releases/2026/10/261016080912.htm"
+ },
+ {
+  "domain": "과학",
+  "title": "NASA’s Roman Space Telescope exceeds expectations by nearly 30%",
+  "source": "Latest Science News -- ScienceDaily",
+  "date": "2026-10-17",
+  "summary": "NASA’s Nancy Grace Roman Space Telescope has exceeded expectations after engineers made incredibly tiny adjustments to s",
+  "url": "https://www.sciencedaily.com/releases/2026/10/261016070630.htm"
+ },
+ {
+  "domain": "과학",
+  "title": "This bird flies thousands of miles, but its wings have a catch",
+  "source": "Latest Science News -- ScienceDaily",
+  "date": "2026-10-17",
+  "summary": "Scientists have uncovered an unexpected trade-off in the wings of the European nightjar, a bird that migrates thousands ",
+  "url": "https://www.sciencedaily.com/releases/2026/10/261016070624.htm"
  },
  {
   "domain": "교육",
